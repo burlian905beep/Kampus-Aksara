@@ -1,0 +1,1417 @@
+<!-- AKSARA LMS - Blogger Compatible Version -->
+<style>
+/* Reset & Base Styles */
+.aksara-wrapper * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.aksara-wrapper {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f3f4f6;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Utility Classes */
+.aksara-hide { display: none !important; }
+.aksara-fade-in { animation: aksaraFadeIn 0.3s ease-in-out; }
+
+@keyframes aksaraFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .aksara-desktop-sidebar { display: none !important; }
+    .aksara-mobile-nav { display: flex !important; }
+    .aksara-main-content { padding-bottom: 80px !important; }
+    .aksara-hide-mobile { display: none !important; }
+}
+
+@media (min-width: 769px) {
+    .aksara-mobile-nav { display: none !important; }
+}
+
+/* Auth View */
+.aksara-auth-view {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #4f46e5 0%, #1e40af 100%);
+    padding: 1rem;
+}
+
+.aksara-auth-box {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 28rem;
+    padding: 2rem;
+}
+
+.aksara-logo-container {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.aksara-logo {
+    height: 4rem;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 0.75rem;
+}
+
+/* Form Styles */
+.aksara-form-group {
+    margin-bottom: 1rem;
+}
+
+.aksara-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.25rem;
+}
+
+.aksara-input {
+    width: 100%;
+    padding: 0.625rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.aksara-input:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.aksara-btn {
+    width: 100%;
+    padding: 0.625rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.aksara-btn-primary {
+    background: #4f46e5;
+    color: white;
+}
+
+.aksara-btn-primary:hover {
+    background: #4338ca;
+}
+
+.aksara-btn-success {
+    background: #16a34a;
+    color: white;
+}
+
+.aksara-btn-success:hover {
+    background: #15803d;
+}
+
+/* Member Layout */
+.aksara-member-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.aksara-desktop-sidebar {
+    width: 16rem;
+    background: #1e1b4b;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 40;
+}
+
+.aksara-sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #312e81;
+}
+
+.aksara-sidebar-logo {
+    height: 2.5rem;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
+.aksara-nav {
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.aksara-nav-btn {
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.aksara-nav-btn:hover {
+    background: #312e81;
+}
+
+.aksara-nav-btn.active {
+    background: #312e81;
+}
+
+.aksara-main-content {
+    flex: 1;
+    margin-left: 16rem;
+    background: #f9fafb;
+    min-height: 100vh;
+}
+
+.aksara-header {
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 1rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.aksara-content {
+    padding: 1.5rem;
+    max-width: 72rem;
+    margin: 0 auto;
+}
+
+/* Mobile Navigation */
+.aksara-mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    display: none;
+    justify-content: space-around;
+    padding: 0.75rem 0.5rem;
+    z-index: 50;
+    box-shadow: 0 -4px 6px -1px rgba(0,0,0,0.1);
+}
+
+.aksara-mobile-nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    background: none;
+    border: none;
+    color: #6b7280;
+    font-size: 0.75rem;
+    cursor: pointer;
+    padding: 0.25rem;
+}
+
+.aksara-mobile-nav-btn.active {
+    color: #4f46e5;
+}
+
+.aksara-mobile-nav-btn i {
+    font-size: 1.25rem;
+}
+
+/* Cards */
+.aksara-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: 1px solid #e5e7eb;
+}
+
+.aksara-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .aksara-grid-2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 768px) {
+    .aksara-grid-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1024px) {
+    .aksara-grid-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Certificate Modal - Professional Design */
+.aksara-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.aksara-modal-content {
+    background: white;
+    border-radius: 0.5rem;
+    max-width: 56rem;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.aksara-certificate {
+    background: linear-gradient(to bottom, #fefefe 0%, #f5f3ff 100%);
+    padding: 2rem;
+    position: relative;
+    border: 12px double #1e1b4b;
+}
+
+.aksara-cert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.aksara-cert-logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.aksara-cert-logo {
+    height: 3rem;
+    width: auto;
+}
+
+.aksara-cert-title-section {
+    text-align: center;
+    flex: 1;
+}
+
+.aksara-cert-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e1b4b;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+}
+
+.aksara-cert-subtitle {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.aksara-cert-level-badge {
+    background: #ede9fe;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    text-align: center;
+}
+
+.aksara-cert-level-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1e1b4b;
+    line-height: 1;
+}
+
+.aksara-cert-level-title {
+    font-size: 0.875rem;
+    color: #4c1d95;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.aksara-cert-level-en {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.aksara-cert-recipient {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.aksara-cert-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.aksara-cert-name {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.5rem;
+    font-family: Georgia, serif;
+}
+
+.aksara-cert-username {
+    font-size: 1rem;
+    color: #4f46e5;
+    font-weight: 600;
+}
+
+.aksara-cert-description {
+    text-align: center;
+    color: #374151;
+    line-height: 1.75;
+    margin: 2rem 0;
+    padding: 0 2rem;
+}
+
+.aksara-cert-highlight {
+    color: #4f46e5;
+    font-weight: 700;
+}
+
+.aksara-cert-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.aksara-cert-stat {
+    text-align: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.aksara-cert-stat-icon {
+    font-size: 1.5rem;
+    color: #4f46e5;
+    margin-bottom: 0.5rem;
+}
+
+.aksara-cert-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e1b4b;
+}
+
+.aksara-cert-stat-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.aksara-cert-materials {
+    margin: 2rem 0;
+}
+
+.aksara-cert-materials-title {
+    font-size: 0.875rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+}
+
+.aksara-cert-material-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.aksara-cert-material-name {
+    font-size: 0.875rem;
+    color: #111827;
+}
+
+.aksara-cert-progress-bar {
+    width: 8rem;
+    height: 0.5rem;
+    background: #e5e7eb;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.aksara-cert-progress-fill {
+    height: 100%;
+    background: #4f46e5;
+    border-radius: 9999px;
+}
+
+.aksara-cert-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e5e7eb;
+}
+
+.aksara-cert-date-section {
+    text-align: center;
+}
+
+.aksara-cert-date-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.aksara-cert-date {
+    font-size: 0.875rem;
+    color: #111827;
+    font-weight: 600;
+}
+
+.aksara-cert-signature {
+    text-align: center;
+}
+
+.aksara-cert-signature-line {
+    width: 12rem;
+    border-top: 1px solid #374151;
+    margin: 2rem auto 0.5rem;
+}
+
+.aksara-cert-signature-name {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.aksara-cert-signature-title {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.aksara-cert-id-section {
+    text-align: center;
+}
+
+.aksara-cert-qr {
+    width: 4rem;
+    height: 4rem;
+    background: #111827;
+    margin: 0 auto 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 0.25rem;
+}
+
+.aksara-cert-id {
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+/* Loading */
+.aksara-loading {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aksara-loading-box {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Responsive Certificate */
+@media (max-width: 640px) {
+    .aksara-certificate {
+        padding: 1rem;
+        border-width: 6px;
+    }
+    
+    .aksara-cert-title {
+        font-size: 1.25rem;
+    }
+    
+    .aksara-cert-name {
+        font-size: 1.5rem;
+    }
+    
+    .aksara-cert-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .aksara-cert-footer {
+        flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+    }
+    
+    .aksara-cert-material-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .aksara-cert-progress-bar {
+        width: 100%;
+    }
+}
+
+/* Print Styles */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .aksara-modal, .aksara-modal * {
+        visibility: visible;
+    }
+    .aksara-modal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white;
+    }
+    .aksara-no-print {
+        display: none !important;
+    }
+}
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<div class="aksara-wrapper" id="aksaraApp">
+    <!-- AUTH VIEW -->
+    <div id="aksaraViewAuth" class="aksara-auth-view">
+        <div class="aksara-auth-box aksara-fade-in">
+            <div class="aksara-logo-container">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhmYwCz9sMVUVDbMFoAyYCKNcD-NsffdUcVHtvUzoqlvbq2QEnUNRQKmTHLGhoE6vWXRChGGA3Yu70DCCV0OIE6UK_Cmp2OiGQXaiglQt9Cd2-Su_u3RpFS8cQ2qYSJEk_CLPoy8ppoQJjRVAuAXuqXYhirfBIm1yWj9AAekY2-Vfzhae9dpny6WEHJqnGy/s400/logo.png" 
+                     alt="AKSARA" class="aksara-logo" 
+                     onerror="this.src='https://via.placeholder.com/150x60/4f46e5/ffffff?text=AKSARA'">
+                <h1 style="font-size: 1.5rem; font-weight: 700; color: #1e1b4b; margin-bottom: 0.25rem;">AKSARA</h1>
+                <p style="color: #6b7280; font-size: 0.875rem;">Open Knowledge Universe</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="aksaraFormLogin" class="aksara-fade-in">
+                <h2 style="font-size: 1.125rem; font-weight: 600; text-align: center; margin-bottom: 1.5rem; color: #111827;">Masuk ke Akun</h2>
+                <div class="aksara-form-group">
+                    <label class="aksara-label">Username</label>
+                    <input type="text" id="aksaraLoginUsername" required 
+                           class="aksara-input" placeholder="Contoh: aksara_rasyid01">
+                </div>
+                <div class="aksara-form-group">
+                    <label class="aksara-label">Password</label>
+                    <input type="password" id="aksaraLoginPassword" required 
+                           class="aksara-input" placeholder="••••••••">
+                </div>
+                <button type="submit" class="aksara-btn aksara-btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+                <p style="text-align: center; margin-top: 1rem; font-size: 0.875rem; color: #6b7280;">
+                    Belum punya akun? 
+                    <a href="#" onclick="aksaraToggleAuth('register')" 
+                       style="color: #4f46e5; font-weight: 600; text-decoration: none;">Daftar Sekarang</a>
+                </p>
+            </form>
+
+            <!-- Register Form -->
+            <form id="aksaraFormRegister" class="aksara-hide aksara-fade-in">
+                <h2 style="font-size: 1.125rem; font-weight: 600; text-align: center; margin-bottom: 1rem; color: #111827;">Buat Akun Baru</h2>
+                <div class="aksara-form-group">
+                    <label class="aksara-label">Nama Lengkap</label>
+                    <input type="text" id="aksaraRegNama" required class="aksara-input">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                    <div class="aksara-form-group">
+                        <label class="aksara-label">Domisili</label>
+                        <input type="text" id="aksaraRegDomisili" required class="aksara-input">
+                    </div>
+                    <div class="aksara-form-group">
+                        <label class="aksara-label">Tanggal Lahir</label>
+                        <input type="date" id="aksaraRegTgl" required class="aksara-input">
+                    </div>
+                </div>
+                <div class="aksara-form-group">
+                    <label class="aksara-label">Profesi / Status</label>
+                    <select id="aksaraRegProfesi" required class="aksara-input">
+                        <option value="">Pilih...</option>
+                        <option value="Pelajar">Pelajar</option>
+                        <option value="Mahasiswa">Mahasiswa</option>
+                        <option value="Pekerja">Pekerja</option>
+                        <option value="Pengajar">Pengajar</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <div class="aksara-form-group">
+                    <label class="aksara-label">Password (Min. 6 karakter)</label>
+                    <input type="password" id="aksaraRegPassword" required minlength="6" class="aksara-input">
+                </div>
+                <button type="submit" class="aksara-btn aksara-btn-success" style="margin-top: 0.5rem;">
+                    <i class="fas fa-user-plus"></i> Daftar & Dapatkan Username
+                </button>
+                <p style="text-align: center; margin-top: 1rem; font-size: 0.875rem; color: #6b7280;">
+                    Sudah punya akun? 
+                    <a href="#" onclick="aksaraToggleAuth('login')" 
+                       style="color: #4f46e5; font-weight: 600; text-decoration: none;">Masuk</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- MEMBER VIEW -->
+    <div id="aksaraViewMember" class="aksara-member-layout aksara-hide">
+        <!-- Desktop Sidebar -->
+        <aside class="aksara-desktop-sidebar">
+            <div class="aksara-sidebar-header">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhmYwCz9sMVUVDbMFoAyYCKNcD-NsffdUcVHtvUzoqlvbq2QEnUNRQKmTHLGhoE6vWXRChGGA3Yu70DCCV0OIE6UK_Cmp2OiGQXaiglQt9Cd2-Su_u3RpFS8cQ2qYSJEk_CLPoy8ppoQJjRVAuAXuqXYhirfBIm1yWj9AAekY2-Vfzhae9dpny6WEHJqnGy/s200/logo.png" 
+                     alt="AKSARA" class="aksara-sidebar-logo"
+                     onerror="this.src='https://via.placeholder.com/100x40/4f46e5/ffffff?text=AKSARA'">
+                <p style="font-size: 0.75rem; color: #a5b4fc;">Member Area</p>
+            </div>
+            <nav class="aksara-nav">
+                <button onclick="aksaraShowMemberView('home')" class="aksara-nav-btn active" data-target="home">
+                    <i class="fas fa-home" style="width: 1.25rem;"></i> Beranda
+                </button>
+                <button onclick="aksaraShowMemberView('course')" class="aksara-nav-btn" data-target="course">
+                    <i class="fas fa-book-open" style="width: 1.25rem;"></i> Materi Course
+                </button>
+                <button onclick="aksaraShowMemberView('portfolio')" class="aksara-nav-btn" data-target="portfolio">
+                    <i class="fas fa-briefcase" style="width: 1.25rem;"></i> Portofolio
+                </button>
+                <button onclick="aksaraShowMemberView('leaderboard')" class="aksara-nav-btn" data-target="leaderboard">
+                    <i class="fas fa-trophy" style="width: 1.25rem;"></i> Papan Peringkat
+                </button>
+                <button onclick="aksaraShowMemberView('consult')" class="aksara-nav-btn" data-target="consult">
+                    <i class="fas fa-comments" style="width: 1.25rem;"></i> Konsultasi
+                </button>
+            </nav>
+            <div style="padding: 1rem; border-top: 1px solid #312e81;">
+                <button onclick="aksaraLogout()" class="aksara-btn" style="background: #dc2626; color: white;">
+                    <i class="fas fa-sign-out-alt"></i> Keluar
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="aksara-main-content">
+            <header class="aksara-header">
+                <div>
+                    <h2 id="aksaraMemberPageTitle" style="font-size: 1.25rem; font-weight: 700; color: #111827;">Beranda</h2>
+                    <p id="aksaraMemberGreeting" style="font-size: 0.875rem; color: #6b7280;">Selamat datang</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div class="aksara-hide-mobile" style="text-align: right;">
+                        <p id="aksaraHeaderUsername" style="font-size: 0.875rem; font-weight: 600; color: #111827;">User</p>
+                        <p id="aksaraHeaderLevel" style="font-size: 0.75rem; color: #4f46e5;">Level 1</p>
+                    </div>
+                    <div style="height: 2.5rem; width: 2.5rem; background: #e0e7ff; border-radius: 9999px; display: flex; align-items: center; justify-content: center; color: #4f46e5; font-weight: 700;" 
+                         id="aksaraHeaderAvatar">U</div>
+                </div>
+            </header>
+
+            <div class="aksara-content">
+                <!-- Home View -->
+                <div id="aksaraMHome" class="aksara-member-view aksara-fade-in">
+                    <div class="aksara-grid aksara-grid-3" style="margin-bottom: 1.5rem;">
+                        <div style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border-radius: 1rem; padding: 1.5rem; color: white; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <div>
+                                    <p style="font-size: 0.875rem; color: #e0e7ff;">Total Poin</p>
+                                    <h3 id="aksaraStatPoin" style="font-size: 2rem; font-weight: 700; margin-top: 0.25rem;">0</h3>
+                                </div>
+                                <i class="fas fa-star" style="font-size: 1.5rem; color: #fde047;"></i>
+                            </div>
+                        </div>
+                        <div class="aksara-card">
+                            <p style="font-size: 0.875rem; color: #6b7280;">Level Tertinggi</p>
+                            <h3 id="aksaraStatLevel" style="font-size: 2rem; font-weight: 700; color: #111827; margin-top: 0.25rem;">1</h3>
+                            <p id="aksaraStatGelar" style="font-size: 0.75rem; color: #4f46e5; margin-top: 0.25rem;">Pemula (Beginner)</p>
+                        </div>
+                        <div class="aksara-card">
+                            <p style="font-size: 0.875rem; color: #6b7280;">Waktu & Tanggal</p>
+                            <h3 id="aksaraLiveClock" style="font-size: 1.5rem; font-weight: 700; color: #111827; margin-top: 0.25rem;">00:00</h3>
+                            <p id="aksaraLiveDate" style="font-size: 0.75rem; color: #6b7280; margin-top: 0.25rem;">Senin, 1 Jan 2025</p>
+                        </div>
+                    </div>
+                    <div class="aksara-card">
+                        <h3 style="font-weight: 700; color: #111827; margin-bottom: 1rem;">Notifikasi Terbaru</h3>
+                        <div id="aksaraNotifList" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <p style="color: #9ca3af; font-size: 0.875rem; text-align: center; padding: 2rem;">Memuat notifikasi...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course View -->
+                <div id="aksaraMCourse" class="aksara-member-view aksara-hide aksara-fade-in">
+                    <div id="aksaraCourseList" class="aksara-grid aksara-grid-2" style="gap: 1rem;">
+                        <p style="color: #6b7280; text-align: center; padding: 3rem; grid-column: 1/-1;">Memuat materi...</p>
+                    </div>
+                    <div id="aksaraLevelDetail" class="aksara-hide">
+                        <button onclick="aksaraBackToCourseList()" 
+                                style="margin-bottom: 1rem; color: #4f46e5; background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <i class="fas fa-arrow-left"></i> Kembali ke Daftar Materi
+                        </button>
+                        <h3 id="aksaraLevelMateriTitle" style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: #111827;"></h3>
+                        <div id="aksaraLevelList" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+                    </div>
+                </div>
+
+                <!-- Portfolio View -->
+                <div id="aksaraMPortfolio" class="aksara-member-view aksara-hide aksara-fade-in">
+                    <div class="aksara-card" style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                            <h3 style="font-weight: 700; color: #111827;">Progres Belajar Anda</h3>
+                            <button onclick="aksaraGenerateCertificate()" 
+                                    class="aksara-btn aksara-btn-primary" 
+                                    style="width: auto; padding: 0.5rem 1rem; font-size: 0.875rem;">
+                                <i class="fas fa-certificate"></i> Cetak Sertifikat
+                            </button>
+                        </div>
+                        <div id="aksaraPortfolioList" style="display: flex; flex-direction: column; gap: 1rem;"></div>
+                    </div>
+                </div>
+
+                <!-- Leaderboard View -->
+                <div id="aksaraMLeaderboard" class="aksara-member-view aksara-hide aksara-fade-in">
+                    <div class="aksara-card" style="overflow: hidden;">
+                        <div style="background: #eef2ff; padding: 1rem; border-bottom: 1px solid #e0e7ff;">
+                            <h3 style="font-weight: 700; color: #1e1b4b; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-trophy" style="color: #fbbf24;"></i> Papan Peringkat AKSARA
+                            </h3>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; font-size: 0.875rem; text-align: left;">
+                                <thead style="background: #f9fafb; color: #4b5563;">
+                                    <tr>
+                                        <th style="padding: 0.75rem 1rem;">Peringkat</th>
+                                        <th style="padding: 0.75rem 1rem;">Username</th>
+                                        <th style="padding: 0.75rem 1rem;" class="aksara-hide-mobile">Nama Lengkap</th>
+                                        <th style="padding: 0.75rem 1rem;" class="aksara-hide-mobile">Domisili</th>
+                                        <th style="padding: 0.75rem 1rem;">Poin</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="aksaraLeaderboardBody" style="border-top: 1px solid #e5e7eb;"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consult View -->
+                <div id="aksaraMConsult" class="aksara-member-view aksara-hide aksara-fade-in">
+                    <div class="aksara-card" style="max-width: 42rem; margin: 0 auto;">
+                        <h3 style="font-weight: 700; color: #111827; margin-bottom: 1.5rem;">Hubungi Admin</h3>
+                        <form id="aksaraFormConsult" style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div>
+                                <label class="aksara-label">Subjek</label>
+                                <input type="text" id="aksaraConsultSubjek" required 
+                                       class="aksara-input" placeholder="Contoh: Bantuan Materi Level 5">
+                            </div>
+                            <div>
+                                <label class="aksara-label">Pesan</label>
+                                <textarea id="aksaraConsultPesan" required rows="4" 
+                                          class="aksara-input" placeholder="Tuliskan pertanyaan atau kendala Anda..."
+                                          style="resize: vertical;"></textarea>
+                            </div>
+                            <button type="submit" class="aksara-btn aksara-btn-primary">
+                                <i class="fas fa-paper-plane"></i> Kirim Pesan
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Mobile Navigation -->
+        <nav class="aksara-mobile-nav">
+            <button onclick="aksaraShowMemberView('home')" class="aksara-mobile-nav-btn active" data-target="home">
+                <i class="fas fa-home"></i>
+                <span>Beranda</span>
+            </button>
+            <button onclick="aksaraShowMemberView('course')" class="aksara-mobile-nav-btn" data-target="course">
+                <i class="fas fa-book-open"></i>
+                <span>Course</span>
+            </button>
+            <button onclick="aksaraShowMemberView('portfolio')" class="aksara-mobile-nav-btn" data-target="portfolio">
+                <i class="fas fa-briefcase"></i>
+                <span>Portofolio</span>
+            </button>
+            <button onclick="aksaraShowMemberView('leaderboard')" class="aksara-mobile-nav-btn" data-target="leaderboard">
+                <i class="fas fa-trophy"></i>
+                <span>Rank</span>
+            </button>
+            <button onclick="aksaraShowMemberView('consult')" class="aksara-mobile-nav-btn" data-target="consult">
+                <i class="fas fa-comments"></i>
+                <span>Bantuan</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- CERTIFICATE MODAL -->
+    <div id="aksaraCertificateModal" class="aksara-modal aksara-hide">
+        <div class="aksara-modal-content">
+            <div class="aksara-no-print" style="padding: 1rem; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-weight: 700; font-size: 1.125rem;">Pratinjau Sertifikat</h3>
+                <button onclick="aksaraCloseCertificate()" 
+                        style="background: none; border: none; font-size: 1.5rem; color: #6b7280; cursor: pointer;">&times;</button>
+            </div>
+            
+            <div id="aksaraCertificateContent" style="padding: 2rem;">
+                <!-- Professional Certificate Design -->
+                <div class="aksara-certificate">
+                    <!-- Header -->
+                    <div class="aksara-cert-header">
+                        <div class="aksara-cert-logo-section">
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhmYwCz9sMVUVDbMFoAyYCKNcD-NsffdUcVHtvUzoqlvbq2QEnUNRQKmTHLGhoE6vWXRChGGA3Yu70DCCV0OIE6UK_Cmp2OiGQXaiglQt9Cd2-Su_u3RpFS8cQ2qYSJEk_CLPoy8ppoQJjRVAuAXuqXYhirfBIm1yWj9AAekY2-Vfzhae9dpny6WEHJqnGy/s200/logo.png" 
+                                 alt="AKSARA" class="aksara-cert-logo"
+                                 onerror="this.src='https://via.placeholder.com/80x80/4f46e5/ffffff?text=AKSARA'">
+                            <div>
+                                <div style="font-size: 0.75rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.1em;">Sertifikat Ini Menunjukkan</div>
+                                <div style="font-size: 0.75rem; color: #6b7280;">Perjalanan Belajar di Aksara</div>
+                            </div>
+                        </div>
+                        <div class="aksara-cert-level-badge">
+                            <div class="aksara-cert-level-number" id="aksaraCertLevelNum">3</div>
+                            <div class="aksara-cert-level-title">Penjelajah</div>
+                            <div class="aksara-cert-level-en">Explorer</div>
+                        </div>
+                    </div>
+
+                    <!-- Title -->
+                    <div class="aksara-cert-title-section" style="margin-bottom: 2rem;">
+                        <h1 class="aksara-cert-title">SERTIFIKAT</h1>
+                        <p style="font-size: 1.125rem; color: #6b7280; letter-spacing: 0.2em;">PEMBELAJARAN</p>
+                    </div>
+
+                    <!-- Recipient -->
+                    <div class="aksara-cert-recipient">
+                        <p class="aksara-cert-label">Diberikan Kepada</p>
+                        <h2 class="aksara-cert-name" id="aksaraCertName">Rasyid Abdul Aziz</h2>
+                        <p class="aksara-cert-username" id="aksaraCertUsername">@rasyidaziz</p>
+                    </div>
+
+                    <!-- Description -->
+                    <p class="aksara-cert-description">
+                        Sebagai anggota AKSARA yang telah menunjukkan komitmen dalam menjelajahi dan mengembangkan pengetahuan di semesta ilmu.
+                    </p>
+
+                    <!-- Stats -->
+                    <div class="aksara-cert-stats">
+                        <div class="aksara-cert-stat">
+                            <div class="aksara-cert-stat-icon"><i class="fas fa-book"></i></div>
+                            <div class="aksara-cert-stat-value" id="aksaraCertCourses">8</div>
+                            <div class="aksara-cert-stat-label">Mata Pelajaran</div>
+                        </div>
+                        <div class="aksara-cert-stat">
+                            <div class="aksara-cert-stat-icon"><i class="fas fa-clock"></i></div>
+                            <div class="aksara-cert-stat-value" id="aksaraCertHours">56</div>
+                            <div class="aksara-cert-stat-label">Jam Belajar</div>
+                        </div>
+                        <div class="aksara-cert-stat">
+                            <div class="aksara-cert-stat-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="aksara-cert-stat-value" id="aksaraCertAvg">62%</div>
+                            <div class="aksara-cert-stat-label">Rata-rata Penyelesaian</div>
+                        </div>
+                        <div class="aksara-cert-stat">
+                            <div class="aksara-cert-stat-icon"><i class="fas fa-certificate"></i></div>
+                            <div class="aksara-cert-stat-value" id="aksaraCertMods">4</div>
+                            <div class="aksara-cert-stat-label">Sertifikat Modul</div>
+                        </div>
+                    </div>
+
+                    <!-- Materials -->
+                    <div class="aksara-cert-materials">
+                        <p class="aksara-cert-materials-title">Materi Yang Telah Dipelajari</p>
+                        <div id="aksaraCertMaterialsList" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+
+                    <!-- Quote -->
+                    <div style="text-align: center; margin: 2rem 0; padding: 1rem; background: white; border-radius: 0.5rem; font-style: italic; color: #6b7280; font-size: 0.875rem;">
+                        "Teruslah menjelajah, karena setiap ilmu membuka pintu menuju ilmu lainnya."
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="aksara-cert-footer">
+                        <div class="aksara-cert-date-section">
+                            <p class="aksara-cert-date-label">Tanggal Terbit</p>
+                            <p class="aksara-cert-date" id="aksaraCertDate">24 April 2025</p>
+                        </div>
+                        
+                        <div class="aksara-cert-signature">
+                            <div style="font-family: 'Brush Script MT', cursive; font-size: 2rem; color: #1e1b4b; margin-bottom: 0.5rem;">Aksara</div>
+                            <div class="aksara-cert-signature-line"></div>
+                            <p class="aksara-cert-signature-name">Tim AKSARA</p>
+                            <p class="aksara-cert-signature-title">Open Knowledge Universe</p>
+                        </div>
+
+                        <div class="aksara-cert-id-section">
+                            <div class="aksara-cert-qr">
+                                <i class="fas fa-qrcode" style="font-size: 2rem;"></i>
+                            </div>
+                            <p class="aksara-cert-id" id="aksaraCertId">AKS-2025-001234</p>
+                            <p style="font-size: 0.625rem; color: #9ca3af; margin-top: 0.25rem;">Verifikasi: aksara.id/verify</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="aksara-no-print" style="padding: 1rem; border-top: 1px solid #e5e7eb; background: #f9fafb; display: flex; justify-content: flex-end; gap: 0.75rem;">
+                <button onclick="aksaraCloseCertificate()" 
+                        class="aksara-btn" 
+                        style="width: auto; background: white; border: 1px solid #d1d5db; color: #374151;">
+                    Tutup
+                </button>
+                <button onclick="window.print()" 
+                        class="aksara-btn aksara-btn-primary" 
+                        style="width: auto;">
+                    <i class="fas fa-print"></i> Cetak / Simpan PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="aksaraLoading" class="aksara-loading aksara-hide">
+        <div class="aksara-loading-box">
+            <i class="fas fa-circle-notch fa-spin" style="color: #4f46e5; font-size: 1.5rem;"></i>
+            <span style="color: #374151; font-weight: 500;">Memproses...</span>
+        </div>
+    </div>
+</div>
+
+<script>
+// AKSARA LMS JavaScript
+const AKSARA_API_URL = "https://script.google.com/macros/s/AKfycbwpNBmkj7wsaL_yzIKY1MDAOQJMzP2JoMsiM0IrVeRjtumMXB_zV_xpRLbqG7uskhc/exec";
+let aksaraCurrentUser = JSON.parse(localStorage.getItem('aksara_user')) || null;
+const aksaraGelarLevel = { 
+    1: 'Pemula (Beginner)', 
+    2: 'Pembelajar (Learner)', 
+    3: 'Penjelajah (Explorer)', 
+    4: 'Ahli (Expert)', 
+    5: 'Master (Master)' 
+};
+
+console.log('🚀 AKSARA App initialized');
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    aksaraUpdateClock();
+    setInterval(aksaraUpdateClock, 1000);
+    
+    if (aksaraCurrentUser) {
+        if (aksaraCurrentUser.role === 'admin') {
+            // Admin view not implemented in this version
+            aksaraShowView('aksaraViewAuth');
+        } else {
+            aksaraShowView('aksaraViewMember');
+            aksaraLoadMemberData();
+        }
+    } else {
+        aksaraShowView('aksaraViewAuth');
+    }
+});
+
+function aksaraShowLoading(show) {
+    document.getElementById('aksaraLoading').classList.toggle('aksara-hide', !show);
+}
+
+function aksaraShowView(viewId) {
+    ['aksaraViewAuth', 'aksaraViewMember'].forEach(id => {
+        document.getElementById(id).classList.add('aksara-hide');
+    });
+    document.getElementById(viewId).classList.remove('aksara-hide');
+}
+
+function aksaraToggleAuth(type) {
+    if (type === 'register') {
+        document.getElementById('aksaraFormLogin').classList.add('aksara-hide');
+        document.getElementById('aksaraFormRegister').classList.remove('aksara-hide');
+    } else {
+        document.getElementById('aksaraFormRegister').classList.add('aksara-hide');
+        document.getElementById('aksaraFormLogin').classList.remove('aksara-hide');
+    }
+}
+
+function aksaraUpdateClock() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+    const dateStr = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
+    const clockEl = document.getElementById('aksaraLiveClock');
+    const dateEl = document.getElementById('aksaraLiveDate');
+    if (clockEl) clockEl.textContent = timeStr;
+    if (dateEl) dateEl.textContent = dateStr;
+}
+
+async function aksaraApiCall(action, payload = {}) {
+    aksaraShowLoading(true);
+    console.log(' Calling API:', action, payload);
+    
+    try {
+        const response = await fetch(AKSARA_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action, ...payload })
+        });
+        
+        const result = await response.json();
+        aksaraShowLoading(false);
+        return result;
+    } catch (error) {
+        aksaraShowLoading(false);
+        console.error(' API Error:', error);
+        alert('Terjadi kesalahan koneksi ke server.');
+        return { status: 'error', message: 'Koneksi gagal' };
+    }
+}
+
+// Login Form
+document.getElementById('aksaraFormLogin').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('aksaraLoginUsername').value;
+    const password = document.getElementById('aksaraLoginPassword').value;
+    
+    const res = await aksaraApiCall('login', { username, password });
+    if (res.status === 'success') {
+        aksaraCurrentUser = res.data;
+        localStorage.setItem('aksara_user', JSON.stringify(aksaraCurrentUser));
+        aksaraShowView('aksaraViewMember');
+        aksaraLoadMemberData();
+    } else {
+        alert(res.message);
+    }
+});
+
+// Register Form
+document.getElementById('aksaraFormRegister').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const payload = {
+        nama_lengkap: document.getElementById('aksaraRegNama').value,
+        domisili: document.getElementById('aksaraRegDomisili').value,
+        tanggal_lahir: document.getElementById('aksaraRegTgl').value,
+        profesi: document.getElementById('aksaraRegProfesi').value,
+        password: document.getElementById('aksaraRegPassword').value
+    };
+    
+    const res = await aksaraApiCall('register', payload);
+    if (res.status === 'success') {
+        alert(`Pendaftaran Berhasil!\n\nUsername Anda: ${res.data.username}\n\nSilakan login.`);
+        aksaraToggleAuth('login');
+        document.getElementById('aksaraLoginUsername').value = res.data.username;
+        document.getElementById('aksaraFormRegister').reset();
+    } else {
+        alert(res.message);
+    }
+});
+
+function aksaraLogout() {
+    localStorage.removeItem('aksara_user');
+    aksaraCurrentUser = null;
+    aksaraShowView('aksaraViewAuth');
+    document.getElementById('aksaraFormLogin').reset();
+}
+
+function aksaraLoadMemberData() {
+    document.getElementById('aksaraHeaderUsername').textContent = aksaraCurrentUser.username;
+    document.getElementById('aksaraHeaderLevel').textContent = `Level ${aksaraCurrentUser.level_tertinggi} • ${aksaraCurrentUser.total_poin} Poin`;
+    document.getElementById('aksaraHeaderAvatar').textContent = aksaraCurrentUser.nama_lengkap.charAt(0).toUpperCase();
+    document.getElementById('aksaraMemberGreeting').textContent = `Halo, ${aksaraCurrentUser.nama_lengkap.split(' ')[0]}!`;
+    
+    document.getElementById('aksaraStatPoin').textContent = aksaraCurrentUser.total_poin;
+    document.getElementById('aksaraStatLevel').textContent = aksaraCurrentUser.level_tertinggi;
+    document.getElementById('aksaraStatGelar').textContent = aksaraGelarLevel[aksaraCurrentUser.level_tertinggi] || 'Pemula';
+
+    aksaraLoadNotifikasi();
+    aksaraLoadCourseList();
+    aksaraLoadPortfolio();
+    aksaraLoadLeaderboard();
+}
+
+function aksaraShowMemberView(target) {
+    document.querySelectorAll('.aksara-member-view').forEach(el => el.classList.add('aksara-hide'));
+    document.getElementById(`aksaraM${target.charAt(0).toUpperCase() + target.slice(1)}`).classList.remove('aksara-hide');
+    
+    document.querySelectorAll('.aksara-nav-btn, .aksara-mobile-nav-btn').forEach(btn => {
+        if (btn.dataset.target === target) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    const titles = { 
+        home: 'Beranda', 
+        course: 'Materi Course', 
+        portfolio: 'Portofolio & Sertifikat', 
+        leaderboard: 'Papan Peringkat', 
+        consult: 'Konsultasi' 
+    };
+    document.getElementById('aksaraMemberPageTitle').textContent = titles[target];
+    
+    if (target === 'course') aksaraLoadCourseList();
+    if (target === 'portfolio') aksaraLoadPortfolio();
+    if (target === 'leaderboard') aksaraLoadLeaderboard();
+}
+
+async function aksaraLoadNotifikasi() {
+    const res = await aksaraApiCall('getNotifikasi', { user_id: aksaraCurrentUser.user_id });
+    const container = document.getElementById('aksaraNotifList');
+    
+    if (res.status === 'success' && res.data && res.data.length > 0) {
+        container.innerHTML = res.data.slice(0, 5).map(n => `
+            <div style="display: flex; gap: 0.75rem; padding: 0.75rem; background: ${n.dibaca === 'TRUE' ? '#f9fafb' : '#eef2ff'}; border-radius: 0.5rem; border-left: 4px solid ${n.dibaca === 'TRUE' ? '#d1d5db' : '#4f46e5'};">
+                <div style="flex: 1;">
+                    <p style="font-weight: 600; font-size: 0.875rem; color: #111827;">${n.judul}</p>
+                    <p style="font-size: 0.75rem; color: #4b5563; margin-top: 0.25rem;">${n.pesan}</p>
+                    <p style="font-size: 0.625rem; color: #9ca3af; margin-top: 0.5rem;">${n.tanggal}</p>
+                </div>
+            </div>
+        `).join('');
+    } else {
+        container.innerHTML = '<p style="color: #9ca3af; font-size: 0.875rem; text-align: center; padding: 2rem;">Belum ada notifikasi</p>';
+    }
+}
+
+async function aksaraLoadCourseList() {
+    const container = document.getElementById('aksaraCourseList');
+    container.innerHTML = '<p style="color: #6b7280; text-align: center; padding: 3rem; grid-column: 1/-1;">Memuat materi...</p>';
+    
+    const res = await aksaraApiCall('getMateriList');
+    
+    if (res.status === 'success' && res.data && res.data.length > 0) {
+        container.innerHTML = res.data.map(m => `
+            <div onclick="aksaraLoadLevelDetail('${m.materi_id}', '${m.judul_materi.replace(/'/g, "\\'")}')" 
+                 style="background: white; border-radius: 0.75rem; padding: 1.25rem; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; transition: all 0.2s;"
+                 onmouseover="this.style.boxShadow='0 4px 6px rgba(0,0,0,0.1)'; this.style.borderColor='#a5b4fc'"
+                 onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.1)'; this.style.borderColor='#e5e7eb'">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.75rem;">
+                    <span style="background: #e0e7ff; color: #4f46e5; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 9999px; font-weight: 600;">${m.kategori}</span>
+                    <span style="font-size: 0.75rem; color: #6b7280;"><i class="fas fa-layer-group"></i> ${m.jumlah_level} Level</span>
+                </div>
+                <h3 style="font-weight: 700; color: #111827; margin-bottom: 0.5rem;">${m.judul_materi}</h3>
+                <p style="font-size: 0.875rem; color: #6b7280;">${m.deskripsi}</p>
+                <div style="margin-top: 1rem; color: #4f46e5; font-size: 0.875rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
+                    Mulai Belajar <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+        `).join('');
+    } else {
+        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem;"><i class="fas fa-book-open" style="font-size: 3rem; color: #d1d5db; margin-bottom: 1rem;"></i><p style="color: #6b7280; font-size: 1.125rem;">Belum ada materi tersedia</p></div>';
+    }
+}
+
+async function aksaraLoadLevelDetail(materiId, judul) {
+    document.getElementById('aksaraCourseList').classList.add('aksara-hide');
+    document.getElementById('aksaraLevelDetail').classList.remove('aksara-hide');
+    document.getElementById('aksaraLevelMateriTitle').textContent = judul;
+    document.getElementById('aksaraLevelList').innerHTML = '<p style="color: #6b7280; text-align: center; padding: 2rem;">Memuat level...</p>';
+    
+    const res = await aksaraApiCall('getLevelMateri', { materi_id: materiId });
+    const container = document.getElementById('aksaraLevelList');
+    
+    if (res.status === 'success' && res.data && res.data.length > 0) {
+        container.innerHTML = res.data.map((lvl) => {
+            let icon = 'fa-play-circle';
+            let color = 'text-blue-600';
+            if (lvl.tipe_konten === 'pdf') { icon = 'fa-file-pdf'; color = 'text-red-600'; }
+            if (lvl.tipe_konten === 'gambar') { icon = 'fa-image'; color = 'text-green-600'; }
+            
+            return `
+            <div style="background: white; border-radius: 0.5rem; border: 1px solid #e5e7eb; padding: 1rem; display: flex; align-items: center; justify-content: space-between; transition: all 0.2s;"
+                 onmouseover="this.style.background='#f9fafb'">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="height: 2.5rem; width: 2.5rem; border-radius: 9999px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; ${color.replace('text-', 'text-')}">
+                        <i class="fas ${icon}"></i>
+                    </div>
+                    <div>
+                        <p style="font-size: 0.75rem; color: #6b7280;">Level ${lvl.nomor_level}</p>
+                        <p style="font-weight: 600; color: #111827;">${lvl.judul_level}</p>
+                    </div>
+                </div>
+                <a href="${lvl.url_konten}" target="_blank" 
+                   onclick="aksaraMarkComplete('${aksaraCurrentUser.user_id}', '${materiId}', '${lvl.level_id}')" 
+                   style="background: #4f46e5; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-external-link-alt"></i> Buka
+                </a>
+            </div>
+            `;
+        }).join('');
+    } else {
+        container.innerHTML = '<p style="color: #6b7280; text-align: center; padding: 2rem;">Belum ada level untuk materi ini</p>';
+    }
+}
+
+function aksaraBackToCourseList() {
+    document.getElementById('aksaraLevelDetail').classList.add('aksara-hide');
+    document.getElementById('aksaraCourseList').classList.remove('aksara-hide');
+}
+
+async function aksaraMarkComplete(userId, materiId, levelId) {
+    await aksaraApiCall('completeLevel', { user_id: userId, materi_id: materiId, level_id: levelId });
+}
+
+async function aksaraLoadPortfolio() {
+    const res = await aksaraApiCall('getPortofolio', { user_id: aksaraCurrentUser.user_id });
+    const container = document.getElementById('aksaraPortfolioList');
+    
+    if (res.status === 'success' && res.data && res.data.length > 0) {
+        container.innerHTML = res.data.map(p => `
+            <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <h4 style="font-weight: 600; color: #111827;">${p.judul_materi}</h4>
+                    <span style="font-size: 0.875rem; font-weight: 700; color: #4f46e5;">${p.persentase}</span>
+                </div>
+                <div style="width: 100%; background: #e5e7eb; border-radius: 9999px; height: 0.625rem;">
+                    <div style="background: #4f46e5; height: 0.625rem; border-radius: 9999px; transition: width 0.3s;" 
+                         style="width: ${p.persentase}"></div>
+                </div>
+                <p style="font-size: 0.75rem; color: #6b7280; margin-top: 0.5rem;">Level ${p.level_selesai} dari ${p.level_terakhir} diselesaikan</p>
+            </div>
+        `).join('');
+    } else {
+        container.innerHTML = '<p style="color: #6b7280; text-align: center; padding: 2rem;">Belum ada progres belajar. Mulai course pertama Anda!</p>';
+    }
+}
+
+async function aksaraGenerateCertificate() {
+    const res = await aksaraApiCall('generateSertifikat', { user_id: aksaraCurrentUser.user_id });
+    if (res.status === 'success') {
+        const d = res.data;
+        document.getElementById('aksaraCertName').textContent = d.nama;
+        document.getElementById('aksaraCertUsername').textContent = `@${d.username}`;
+        document.getElementById('aksaraCertLevelNum').textContent = d.level;
+        document.getElementById('aksaraCertCourses').textContent = d.total_materi || '8';
+        document.getElementById('aksaraCertHours').textContent = d.total_jam || '56';
+        document.getElementById('aksaraCertAvg').textContent = d.rata_rata_progres || '62%';
+        document.getElementById('aksaraCertMods').textContent = d.total_sertifikat || '4';
+        document.getElementById('aksaraCertDate').textContent = d.tanggal;
+        document.getElementById('aksaraCertId').textContent = d.sertifikat_id;
+        
+        // Add materials list
+        const materialsHtml = `
+            <div class="aksara-cert-material-item">
+                <span class="aksara-cert-material-name">Dasar Pemrograman (Python)</span>
+                <div class="aksara-cert-progress-bar">
+                    <div class="aksara-cert-progress-fill" style="width: 100%"></div>
+                </div>
+            </div>
+            <div class="aksara-cert-material-item">
+                <span class="aksara-cert-material-name">Kecerdasan Buatan (AI)</span>
+                <div class="aksara-cert-progress-bar">
+                    <div class="aksara-cert-progress-fill" style="width: 70%"></div>
+                </div>
+            </div>
+            <div class="aksara-cert-material-item">
+                <span class="aksara-cert-material-name">Manajemen Waktu</span>
+                <div class="aksara-cert-progress-bar">
+                    <div class="aksara-cert-progress-fill" style="width: 60%"></div>
+                </div>
+            </div>
+        `;
+        document.getElementById('aksaraCertMaterialsList').innerHTML = materialsHtml;
+        
+        document.getElementById('aksaraCertificateModal').classList.remove('aksara-hide');
+    } else {
+        alert(res.message);
+    }
+}
+
+function aksaraCloseCertificate() {
+    document.getElementById('aksaraCertificateModal').classList.add('aksara-hide');
+}
+
+async function aksaraLoadLeaderboard() {
+    const res = await aksaraApiCall('getLeaderboard');
+    const tbody = document.getElementById('aksaraLeaderboardBody');
+    
+    if (res.status === 'success' && res.data && res.data.length > 0) {
+        tbody.innerHTML = res.data.slice(0, 20).map((m, idx) => {
+            let rankClass = 'color: #6b7280;';
+            let rankIcon = '';
+            if (idx === 0) { rankClass = 'color: #ca8a04; font-weight: 700;'; rankIcon = '<i class="fas fa-crown" style="margin-right: 0.25rem;"></i>'; }
+            else if (idx === 1) { rankClass = 'color: #6b7280; font-weight: 700;'; rankIcon = '<i class="fas fa-medal" style="margin-right: 0.25rem;"></i>'; }
+            else if (idx === 2) { rankClass = 'color: #ea580c; font-weight: 700;'; rankIcon = '<i class="fas fa-medal" style="margin-right: 0.25rem;"></i>'; }
+            
+            const isMe = m.user_id === aksaraCurrentUser.user_id ? 'background: #eef2ff; font-weight: 600;' : '';
+            
+            return `
+            <tr style="${isMe}">
+                <td style="padding: 0.75rem 1rem; ${rankClass}">${rankIcon} #${m.peringkat}</td>
+                <td style="padding: 0.75rem 1rem; font-weight: 500; color: #111827;">@${m.username}</td>
+                <td style="padding: 0.75rem 1rem; color: #4b5563;" class="aksara-hide-mobile">${m.nama_lengkap}</td>
+                <td style="padding: 0.75rem 1rem; color: #6b7280;" class="aksara-hide-mobile">${m.domisili}</td>
+                <td style="padding: 0.75rem 1rem; font-weight: 700; color: #4f46e5;">${m.total_poin}</td>
+            </tr>
+            `;
+        }).join('');
+    } else {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem; color: #6b7280;">Belum ada data peringkat</td></tr>';
+    }
+}
+
+document.getElementById('aksaraFormConsult').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const res = await aksaraApiCall('kirimKonsultasi', {
+        user_id: aksaraCurrentUser.user_id,
+        subjek: document.getElementById('aksaraConsultSubjek').value,
+        pesan: document.getElementById('aksaraConsultPesan').value
+    });
+    if (res.status === 'success') {
+        alert('Pesan berhasil dikirim ke Admin!');
+        document.getElementById('aksaraFormConsult').reset();
+    } else {
+        alert(res.message);
+    }
+});
+</script>
