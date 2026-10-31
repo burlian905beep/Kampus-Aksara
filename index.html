@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AKSARA - Open Knowledge Universe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .hide { display: none !important; }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @media print {
+            body * { visibility: hidden; }
+            #certificate-modal, #certificate-modal * { visibility: visible; }
+            #certificate-modal { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 20px; background: white; }
+            .no-print { display: none !important; }
+        }
+        .mobile-nav { display: none; }
+        @media (max-width: 768px) {
+            .desktop-sidebar { display: none; }
+            .mobile-nav { display: flex; }
+            .main-content { padding-bottom: 80px; }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- VIEW: LOGIN & REGISTER -->
+    <div id="view-auth" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 to-blue-800 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 fade-in">
+            <div class="text-center mb-6">
+                <img src="logo.png" alt="AKSARA Logo" class="h-16 mx-auto mb-3 object-contain" onerror="this.src='https://via.placeholder.com/150x50/1e3a8a/ffffff?text=AKSARA'">
+                <h1 class="text-2xl font-bold text-indigo-900">AKSARA</h1>
+                <p class="text-gray-500 text-sm">Open Knowledge Universe</p>
+            </div>
+
+            <form id="form-login" class="space-y-4">
+                <h2 class="text-lg font-semibold text-center mb-4">Masuk ke Akun</h2>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                    <input type="text" id="login-username" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Contoh: aksara_rasyid01">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" id="login-password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+                <p class="text-center text-sm text-gray-600">
+                    Belum punya akun? <a href="#" onclick="toggleAuth('register')" class="text-indigo-600 font-semibold hover:underline">Daftar Sekarang</a>
+                </p>
+            </form>
+
+            <form id="form-register" class="space-y-3 hide">
+                <h2 class="text-lg font-semibold text-center mb-2">Buat Akun Baru</h2>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                    <input type="text" id="reg-nama" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Domisili</label>
+                        <input type="text" id="reg-domisili" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Tanggal Lahir</label>
+                        <input type="date" id="reg-tgl" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Profesi / Status</label>
+                    <select id="reg-profesi" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <option value="">Pilih...</option>
+                        <option value="Pelajar">Pelajar</option>
+                        <option value="Mahasiswa">Mahasiswa</option>
+                        <option value="Pekerja">Pekerja</option>
+                        <option value="Pengajar">Pengajar</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Password (Min. 6 karakter)</label>
+                    <input type="password" id="reg-password" required minlength="6" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white py-2.5 rounded-lg font-semibold hover:bg-green-700 transition mt-2">
+                    <i class="fas fa-user-plus"></i> Daftar & Dapatkan Username
+                </button>
+                <p class="text-center text-sm text-gray-600">
+                    Sudah punya akun? <a href="#" onclick="toggleAuth('login')" class="text-indigo-600 font-semibold hover:underline">Masuk</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- VIEW: MEMBER DASHBOARD -->
+    <div id="view-member" class="hide min-h-screen flex flex-col md:flex-row">
+        <aside class="desktop-sidebar w-64 bg-indigo-900 text-white flex flex-col min-h-screen">
+            <div class="p-6 border-b border-indigo-800">
+                <img src="logo.png" alt="Logo" class="h-10 mb-2 object-contain" onerror="this.src='https://via.placeholder.com/100x30/1e3a8a/ffffff?text=AKSARA'">
+                <p class="text-xs text-indigo-300">Member Area</p>
+            </div>
+            <nav class="flex-1 p-4 space-y-2">
+                <button onclick="showMemberView('home')" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-indigo-800 transition flex items-center gap-3 bg-indigo-800" data-target="home">
+                    <i class="fas fa-home w-5"></i> Beranda
+                </button>
+                <button onclick="showMemberView('course')" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-indigo-800 transition flex items-center gap-3" data-target="course">
+                    <i class="fas fa-book-open w-5"></i> Materi Course
+                </button>
+                <button onclick="showMemberView('portfolio')" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-indigo-800 transition flex items-center gap-3" data-target="portfolio">
+                    <i class="fas fa-briefcase w-5"></i> Portofolio & Sertifikat
+                </button>
+                <button onclick="showMemberView('leaderboard')" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-indigo-800 transition flex items-center gap-3" data-target="leaderboard">
+                    <i class="fas fa-trophy w-5"></i> Papan Peringkat
+                </button>
+                <button onclick="showMemberView('consult')" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-indigo-800 transition flex items-center gap-3" data-target="consult">
+                    <i class="fas fa-comments w-5"></i> Konsultasi
+                </button>
+            </nav>
+            <div class="p-4 border-t border-indigo-800">
+                <button onclick="logout()" class="w-full px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm font-medium transition">
+                    <i class="fas fa-sign-out-alt"></i> Keluar
+                </button>
+            </div>
+        </aside>
+
+        <main class="flex-1 main-content bg-gray-50 overflow-y-auto">
+            <header class="bg-white shadow-sm px-6 py-4 flex justify-between items-center sticky top-0 z-10">
+                <div>
+                    <h2 id="member-page-title" class="text-xl font-bold text-gray-800">Beranda</h2>
+                    <p id="member-greeting" class="text-sm text-gray-500">Selamat datang</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right hidden sm:block">
+                        <p id="header-username" class="text-sm font-semibold text-gray-800">User</p>
+                        <p id="header-level" class="text-xs text-indigo-600">Level 1</p>
+                    </div>
+                    <div class="h-10 w-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-700 font-bold" id="header-avatar">U</div>
+                </div>
+            </header>
+
+            <div class="p-6 max-w-6xl mx-auto">
+                <!-- Member: Home -->
+                <div id="m-home" class="member-view fade-in">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl p-6 text-white shadow-lg">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-indigo-100 text-sm">Total Poin</p>
+                                    <h3 id="stat-poin" class="text-3xl font-bold mt-1">0</h3>
+                                </div>
+                                <i class="fas fa-star text-2xl text-yellow-300"></i>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                            <p class="text-gray-500 text-sm">Level Tertinggi</p>
+                            <h3 id="stat-level" class="text-3xl font-bold text-gray-800 mt-1">1</h3>
+                            <p id="stat-gelar" class="text-xs text-indigo-600 mt-1">Pemula (Beginner)</p>
+                        </div>
+                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                            <p class="text-gray-500 text-sm">Waktu & Tanggal</p>
+                            <h3 id="live-clock" class="text-2xl font-bold text-gray-800 mt-1">00:00</h3>
+                            <p id="live-date" class="text-xs text-gray-500 mt-1">Senin, 1 Jan 2025</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                        <h3 class="font-bold text-gray-800 mb-4">Notifikasi Terbaru</h3>
+                        <div id="notif-list" class="space-y-3">
+                            <p class="text-gray-400 text-sm text-center py-4">Memuat notifikasi...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Member: Course -->
+                <div id="m-course" class="member-view hide fade-in">
+                    <div id="course-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <p class="text-gray-500 text-center py-8 col-span-3">Memuat materi...</p>
+                    </div>
+                    <div id="level-detail" class="hide">
+                        <button onclick="backToCourseList()" class="mb-4 text-indigo-600 hover:underline flex items-center gap-2">
+                            <i class="fas fa-arrow-left"></i> Kembali ke Daftar Materi
+                        </button>
+                        <h3 id="level-materi-title" class="text-xl font-bold mb-4"></h3>
+                        <div id="level-list" class="space-y-3"></div>
+                    </div>
+                </div>
+
+                <!-- Member: Portfolio -->
+                <div id="m-portfolio" class="member-view hide fade-in">
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-gray-800">Progres Belajar Anda</h3>
+                            <button onclick="generateCertificate()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition flex items-center gap-2">
+                                <i class="fas fa-certificate"></i> Cetak Sertifikat
+                            </button>
+                        </div>
+                        <div id="portfolio-list" class="space-y-4"></div>
+                    </div>
+                </div>
+
+                <!-- Member: Leaderboard -->
+                <div id="m-leaderboard" class="member-view hide fade-in">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-4 bg-indigo-50 border-b border-indigo-100">
+                            <h3 class="font-bold text-indigo-900 flex items-center gap-2">
+                                <i class="fas fa-trophy text-yellow-500"></i> Papan Peringkat AKSARA
+                            </h3>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left">
+                                <thead class="bg-gray-50 text-gray-600">
+                                    <tr>
+                                        <th class="px-6 py-3">Peringkat</th>
+                                        <th class="px-6 py-3">Username</th>
+                                        <th class="px-6 py-3 hidden sm:table-cell">Nama Lengkap</th>
+                                        <th class="px-6 py-3 hidden md:table-cell">Domisili</th>
+                                        <th class="px-6 py-3">Poin</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leaderboard-body" class="divide-y divide-gray-100"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Member: Consultation -->
+                <div id="m-consult" class="member-view hide fade-in">
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 max-w-2xl mx-auto">
+                        <h3 class="font-bold text-gray-800 mb-4">Hubungi Admin</h3>
+                        <form id="form-consult" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Subjek</label>
+                                <input type="text" id="consult-subjek" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Contoh: Bantuan Materi Level 5">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Pesan</label>
+                                <textarea id="consult-pesan" required rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Tuliskan pertanyaan atau kendala Anda..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                                <i class="fas fa-paper-plane"></i> Kirim Pesan
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <nav class="mobile-nav fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 justify-around py-3 px-2 z-20 shadow-lg">
+            <button onclick="showMemberView('home')" class="flex flex-col items-center text-indigo-600 text-xs gap-1 mobile-nav-btn" data-target="home">
+                <i class="fas fa-home text-lg"></i> Beranda
+            </button>
+            <button onclick="showMemberView('course')" class="flex flex-col items-center text-gray-500 text-xs gap-1 mobile-nav-btn" data-target="course">
+                <i class="fas fa-book-open text-lg"></i> Course
+            </button>
+            <button onclick="showMemberView('portfolio')" class="flex flex-col items-center text-gray-500 text-xs gap-1 mobile-nav-btn" data-target="portfolio">
+                <i class="fas fa-briefcase text-lg"></i> Portofolio
+            </button>
+            <button onclick="showMemberView('leaderboard')" class="flex flex-col items-center text-gray-500 text-xs gap-1 mobile-nav-btn" data-target="leaderboard">
+                <i class="fas fa-trophy text-lg"></i> Rank
+            </button>
+            <button onclick="showMemberView('consult')" class="flex flex-col items-center text-gray-500 text-xs gap-1 mobile-nav-btn" data-target="consult">
+                <i class="fas fa-comments text-lg"></i> Bantuan
+            </button>
+        </nav>
+    </div>
+
+    <!-- VIEW: ADMIN DASHBOARD -->
+    <div id="view-admin" class="hide min-h-screen flex flex-col md:flex-row">
+        <aside class="w-64 bg-gray-900 text-white flex flex-col min-h-screen">
+            <div class="p-6 border-b border-gray-800">
+                <img src="logo.png" alt="Logo" class="h-10 mb-2 object-contain" onerror="this.src='https://via.placeholder.com/100x30/1e3a8a/ffffff?text=AKSARA'">
+                <p class="text-xs text-gray-400">Administrator Panel</p>
+            </div>
+            <nav class="flex-1 p-4 space-y-2">
+                <button onclick="showAdminView('home')" class="admin-nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition flex items-center gap-3 bg-gray-800" data-target="home">
+                    <i class="fas fa-chart-line w-5"></i> Dashboard
+                </button>
+                <button onclick="showAdminView('materi')" class="admin-nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition flex items-center gap-3" data-target="materi">
+                    <i class="fas fa-folder-open w-5"></i> Kelola Materi
+                </button>
+                <button onclick="showAdminView('members')" class="admin-nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition flex items-center gap-3" data-target="members">
+                    <i class="fas fa-users w-5"></i> Data Member
+                </button>
+                <button onclick="showAdminView('consult')" class="admin-nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition flex items-center gap-3" data-target="consult">
+                    <i class="fas fa-envelope w-5"></i> Konsultasi
+                </button>
+                <button onclick="showAdminView('notif')" class="admin-nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition flex items-center gap-3" data-target="notif">
+                    <i class="fas fa-bell w-5"></i> Kirim Notifikasi
+                </button>
+            </nav>
+            <div class="p-4 border-t border-gray-800">
+                <button onclick="logout()" class="w-full px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm font-medium transition">
+                    <i class="fas fa-sign-out-alt"></i> Keluar
+                </button>
+            </div>
+        </aside>
+
+        <main class="flex-1 bg-gray-100 overflow-y-auto">
+            <header class="bg-white shadow-sm px-6 py-4 flex justify-between items-center sticky top-0 z-10">
+                <h2 id="admin-page-title" class="text-xl font-bold text-gray-800">Dashboard</h2>
+                <div class="flex items-center gap-3">
+                    <span id="admin-name-display" class="text-sm font-semibold text-gray-700">Admin</span>
+                    <div class="h-10 w-10 bg-gray-800 rounded-full flex items-center justify-center text-white font-bold">A</div>
+                </div>
+            </header>
+
+            <div class="p-6 max-w-6xl mx-auto">
+                <div id="a-home" class="admin-view fade-in">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                            <p class="text-gray-500 text-sm">Total Member</p>
+                            <h3 id="admin-stat-members" class="text-3xl font-bold text-indigo-600 mt-1">0</h3>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                            <p class="text-gray-500 text-sm">Total Materi Aktif</p>
+                            <h3 id="admin-stat-materi" class="text-3xl font-bold text-green-600 mt-1">0</h3>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                            <p class="text-gray-500 text-sm">Member Paling Aktif</p>
+                            <h3 id="admin-stat-active" class="text-lg font-bold text-gray-800 mt-1 truncate">-</h3>
+                            <p id="admin-stat-active-time" class="text-xs text-gray-500">0 jam belajar</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                        <h3 class="font-bold text-gray-800 mb-4">Distribusi Level Member</h3>
+                        <div id="admin-level-stats" class="space-y-3"></div>
+                    </div>
+                </div>
+
+                <div id="a-materi" class="admin-view hide fade-in">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-gray-50 text-gray-600">
+                                <tr>
+                                    <th class="px-6 py-3">ID</th>
+                                    <th class="px-6 py-3">Judul Materi</th>
+                                    <th class="px-6 py-3">Kategori</th>
+                                    <th class="px-6 py-3">Jumlah Level</th>
+                                    <th class="px-6 py-3">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-materi-list" class="divide-y divide-gray-100"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="a-members" class="admin-view hide fade-in">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-gray-50 text-gray-600">
+                                <tr>
+                                    <th class="px-6 py-3">Username</th>
+                                    <th class="px-6 py-3">Nama Lengkap</th>
+                                    <th class="px-6 py-3">Domisili</th>
+                                    <th class="px-6 py-3">Poin</th>
+                                    <th class="px-6 py-3">Level</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-members-list" class="divide-y divide-gray-100"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="a-consult" class="admin-view hide fade-in">
+                    <div id="admin-consult-list" class="space-y-4"></div>
+                </div>
+
+                <div id="a-notif" class="admin-view hide fade-in">
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 max-w-2xl mx-auto">
+                        <h3 class="font-bold text-gray-800 mb-4">Kirim Notifikasi ke Member</h3>
+                        <form id="form-admin-notif" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Username Tujuan (kosongkan untuk SEMUA)</label>
+                                <input type="text" id="notif-target" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Contoh: aksara_rasyid01">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Judul Notifikasi</label>
+                                <input type="text" id="notif-judul" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Isi Pesan</label>
+                                <textarea id="notif-pesan" required rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                                <i class="fas fa-paper-plane"></i> Kirim Notifikasi
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL: CERTIFICATE -->
+    <div id="certificate-modal" class="hide fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-4 border-b flex justify-between items-center no-print">
+                <h3 class="font-bold text-lg">Pratinjau Sertifikat</h3>
+                <button onclick="closeCertificate()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            </div>
+            <div class="p-8 bg-white" id="certificate-content">
+                <div class="border-8 border-double border-indigo-900 p-8 text-center relative bg-gradient-to-b from-white to-indigo-50">
+                    <img src="logo.png" alt="AKSARA" class="h-12 mx-auto mb-4 object-contain" onerror="this.src='https://via.placeholder.com/120x40/1e3a8a/ffffff?text=AKSARA'">
+                    <h1 class="text-3xl font-bold text-indigo-900 tracking-wider mb-2">SERTIFIKAT PENGHARGAAN</h1>
+                    <p class="text-gray-600 mb-6">Diberikan kepada:</p>
+                    <h2 id="cert-name" class="text-4xl font-serif font-bold text-gray-800 mb-2 italic">Nama Lengkap</h2>
+                    <p id="cert-username" class="text-sm text-gray-500 mb-6 font-mono">(@username)</p>
+                    <p class="text-gray-700 mb-4 max-w-lg mx-auto leading-relaxed">
+                        Telah berhasil menyelesaikan pembelajaran dengan dedikasi tinggi dan mencapai 
+                        <span id="cert-level" class="font-bold text-indigo-700">Level X</span> 
+                        dengan gelar 
+                        <span id="cert-gelar" class="font-bold text-indigo-700">Gelar</span>.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 max-w-md mx-auto mb-8 text-sm">
+                        <div class="bg-indigo-100 p-3 rounded">
+                            <p class="text-gray-600">Materi Diselesaikan</p>
+                            <p id="cert-materi" class="font-bold text-indigo-900 text-lg">0</p>
+                        </div>
+                        <div class="bg-indigo-100 p-3 rounded">
+                            <p class="text-gray-600">Rata-rata Progres</p>
+                            <p id="cert-progres" class="font-bold text-indigo-900 text-lg">0%</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-end mt-12 px-8">
+                        <div class="text-left">
+                            <p id="cert-date" class="text-sm text-gray-600 mb-8">Tanggal</p>
+                            <div class="border-t border-gray-400 w-40"></div>
+                            <p class="text-xs text-gray-500 mt-1">Tanggal Penerbitan</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-24 h-24 bg-gray-200 mx-auto mb-2 flex items-center justify-center rounded">
+                                <i class="fas fa-qrcode text-4xl text-gray-600"></i>
+                            </div>
+                            <p class="text-xs text-gray-500">Verifikasi: <span id="cert-id" class="font-mono">AKS-XXX</span></p>
+                        </div>
+                        <div class="text-right">
+                            <div class="border-t border-gray-400 w-40 ml-auto mb-1"></div>
+                            <p class="text-sm font-bold text-gray-800">Administrator AKSARA</p>
+                            <p class="text-xs text-gray-500 mt-1">Open Knowledge Universe</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 border-t bg-gray-50 flex justify-end gap-3 no-print">
+                <button onclick="closeCertificate()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition">Tutup</button>
+                <button onclick="window.print()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center gap-2">
+                    <i class="fas fa-print"></i> Cetak / Simpan PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading" class="hide fixed inset-0 bg-black bg-opacity-30 z-[60] flex items-center justify-center">
+        <div class="bg-white p-4 rounded-lg shadow-lg flex items-center gap-3">
+            <i class="fas fa-circle-notch fa-spin text-indigo-600 text-xl"></i>
+            <span class="text-gray-700 font-medium">Memproses...</span>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbwpNBmkj7wsaL_yzIKY1MDAOQJMzP2JoMsiM0IrVeRjtumMXB_zV_xpRLbqG7uskhc/exec";
+        let currentUser = JSON.parse(localStorage.getItem('aksara_user')) || null;
+        const gelarLevel = { 1: 'Pemula (Beginner)', 2: 'Pembelajar (Learner)', 3: 'Penjelajah (Explorer)', 4: 'Ahli (Expert)', 5: 'Master (Master)' };
+
+        console.log('🚀 AKSARA App initialized');
+        console.log('Current user:', currentUser);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateClock();
+            setInterval(updateClock, 1000);
+            
+            if (currentUser) {
+                if (currentUser.role === 'admin') {
+                    showView('view-admin');
+                    loadAdminData();
+                } else {
+                    showView('view-member');
+                    loadMemberData();
+                }
+            } else {
+                showView('view-auth');
+            }
+        });
+
+        function showLoading(show) {
+            document.getElementById('loading').classList.toggle('hide', !show);
+        }
+
+        function showView(viewId) {
+            ['view-auth', 'view-member', 'view-admin'].forEach(id => {
+                document.getElementById(id).classList.add('hide');
+            });
+            document.getElementById(viewId).classList.remove('hide');
+        }
+
+        function toggleAuth(type) {
+            if (type === 'register') {
+                document.getElementById('form-login').classList.add('hide');
+                document.getElementById('form-register').classList.remove('hide');
+            } else {
+                document.getElementById('form-register').classList.add('hide');
+                document.getElementById('form-login').classList.remove('hide');
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            const dateStr = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
+            const clockEl = document.getElementById('live-clock');
+            const dateEl = document.getElementById('live-date');
+            if (clockEl) clockEl.textContent = timeStr;
+            if (dateEl) dateEl.textContent = dateStr;
+        }
+
+        async function apiCall(action, payload = {}) {
+            showLoading(true);
+            console.log('📡 Calling API:', action, payload);
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action, ...payload })
+                });
+                
+                console.log('📥 Response status:', response.status);
+                const result = await response.json();
+                console.log('📦 Response data:', result);
+                
+                showLoading(false);
+                return result;
+            } catch (error) {
+                showLoading(false);
+                console.error('❌ API Error:', error);
+                alert('Terjadi kesalahan koneksi ke server.');
+                return { status: 'error', message: 'Koneksi gagal' };
+            }
+        }
+
+        document.getElementById('form-login').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            const res = await apiCall('login', { username, password });
+            if (res.status === 'success') {
+                currentUser = res.data;
+                localStorage.setItem('aksara_user', JSON.stringify(currentUser));
+                if (currentUser.role === 'admin') {
+                    showView('view-admin');
+                    loadAdminData();
+                } else {
+                    showView('view-member');
+                    loadMemberData();
+                }
+            } else {
+                alert(res.message);
+            }
+        });
+
+        document.getElementById('form-register').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                nama_lengkap: document.getElementById('reg-nama').value,
+                domisili: document.getElementById('reg-domisili').value,
+                tanggal_lahir: document.getElementById('reg-tgl').value,
+                profesi: document.getElementById('reg-profesi').value,
+                password: document.getElementById('reg-password').value
+            };
+            
+            const res = await apiCall('register', payload);
+            if (res.status === 'success') {
+                alert(`Pendaftaran Berhasil!\n\nUsername Anda: ${res.data.username}\n\nSilakan login.`);
+                toggleAuth('login');
+                document.getElementById('login-username').value = res.data.username;
+                document.getElementById('form-register').reset();
+            } else {
+                alert(res.message);
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('aksara_user');
+            currentUser = null;
+            showView('view-auth');
+            document.getElementById('form-login').reset();
+        }
+
+        function loadMemberData() {
+            console.log('👤 Loading member data for:', currentUser);
+            
+            document.getElementById('header-username').textContent = currentUser.username;
+            document.getElementById('header-level').textContent = `Level ${currentUser.level_tertinggi} • ${currentUser.total_poin} Poin`;
+            document.getElementById('header-avatar').textContent = currentUser.nama_lengkap.charAt(0).toUpperCase();
+            document.getElementById('member-greeting').textContent = `Halo, ${currentUser.nama_lengkap.split(' ')[0]}!`;
+            
+            document.getElementById('stat-poin').textContent = currentUser.total_poin;
+            document.getElementById('stat-level').textContent = currentUser.level_tertinggi;
+            document.getElementById('stat-gelar').textContent = gelarLevel[currentUser.level_tertinggi] || 'Pemula';
+
+            loadNotifikasi();
+            loadCourseList();
+            loadPortfolio();
+            loadLeaderboard();
+        }
+
+        function showMemberView(target) {
+            console.log('📂 Switching to member view:', target);
+            
+            document.querySelectorAll('.member-view').forEach(el => el.classList.add('hide'));
+            document.getElementById(`m-${target}`).classList.remove('hide');
+            
+            document.querySelectorAll('.nav-btn, .mobile-nav-btn').forEach(btn => {
+                if (btn.dataset.target === target) {
+                    btn.classList.add('text-indigo-600', 'bg-indigo-50');
+                    btn.classList.remove('text-gray-500');
+                } else {
+                    btn.classList.remove('text-indigo-600', 'bg-indigo-50');
+                    btn.classList.add('text-gray-500');
+                }
+            });
+
+            const titles = { home: 'Beranda', course: 'Materi Course', portfolio: 'Portofolio & Sertifikat', leaderboard: 'Papan Peringkat', consult: 'Konsultasi' };
+            document.getElementById('member-page-title').textContent = titles[target];
+            
+            if (target === 'course') loadCourseList();
+            if (target === 'portfolio') loadPortfolio();
+            if (target === 'leaderboard') loadLeaderboard();
+        }
+
+        async function loadNotifikasi() {
+            console.log('🔔 Loading notifikasi...');
+            const res = await apiCall('getNotifikasi', { user_id: currentUser.user_id });
+            const container = document.getElementById('notif-list');
+            
+            if (res.status === 'success' && res.data && res.data.length > 0) {
+                container.innerHTML = res.data.slice(0, 5).map(n => `
+                    <div class="flex gap-3 p-3 bg-gray-50 rounded-lg border-l-4 ${n.dibaca === 'TRUE' ? 'border-gray-300' : 'border-indigo-500 bg-indigo-50'}">
+                        <div class="flex-1">
+                            <p class="font-semibold text-sm text-gray-800">${n.judul}</p>
+                            <p class="text-xs text-gray-600 mt-1">${n.pesan}</p>
+                            <p class="text-xs text-gray-400 mt-2">${n.tanggal}</p>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = '<p class="text-gray-400 text-sm text-center py-4">Belum ada notifikasi</p>';
+            }
+        }
+
+        async function loadCourseList() {
+            console.log('📚 Loading course list...');
+            const container = document.getElementById('course-list');
+            container.innerHTML = '<p class="text-gray-500 text-center py-8 col-span-3">Memuat materi...</p>';
+            
+            const res = await apiCall('getMateriList');
+            console.log('📚 Course response:', res);
+            
+            if (res.status === 'success' && res.data && res.data.length > 0) {
+                container.innerHTML = res.data.map(m => `
+                    <div onclick="loadLevelDetail('${m.materi_id}', '${m.judul_materi.replace(/'/g, "\\'")}')" class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 cursor-pointer hover:shadow-md transition hover:border-indigo-200">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-full font-medium">${m.kategori}</span>
+                            <span class="text-xs text-gray-500"><i class="fas fa-layer-group"></i> ${m.jumlah_level} Level</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">${m.judul_materi}</h3>
+                        <p class="text-sm text-gray-500">${m.deskripsi}</p>
+                        <div class="mt-4 flex items-center text-indigo-600 text-sm font-medium">
+                            Mulai Belajar <i class="fas fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = '<div class="col-span-3 text-center py-12"><i class="fas fa-book-open text-6xl text-gray-300 mb-4"></i><p class="text-gray-500 text-lg">Belum ada materi tersedia</p></div>';
+            }
+        }
+
+        async function loadLevelDetail(materiId, judul) {
+            console.log('📖 Loading level detail for:', materiId);
+            document.getElementById('course-list').classList.add('hide');
+            document.getElementById('level-detail').classList.remove('hide');
+            document.getElementById('level-materi-title').textContent = judul;
+            document.getElementById('level-list').innerHTML = '<p class="text-gray-500 text-center py-4">Memuat level...</p>';
+            
+            const res = await apiCall('getLevelMateri', { materi_id: materiId });
+            const container = document.getElementById('level-list');
+            
+            if (res.status === 'success' && res.data && res.data.length > 0) {
+                container.innerHTML = res.data.map((lvl) => {
+                    let icon = 'fa-play-circle';
+                    let color = 'text-blue-600';
+                    if (lvl.tipe_konten === 'pdf') { icon = 'fa-file-pdf'; color = 'text-red-600'; }
+                    if (lvl.tipe_konten === 'gambar') { icon = 'fa-image'; color = 'text-green-600'; }
+                    
+                    return `
+                    <div class="bg-white rounded-lg border border-gray-200 p-4 flex items-center justify-between hover:bg-gray-50 transition">
+                        <div class="flex items-center gap-4">
+                            <div class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center ${color}">
+                                <i class="fas ${icon}"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500">Level ${lvl.nomor_level}</p>
+                                <p class="font-semibold text-gray-800">${lvl.judul_level}</p>
+                            </div>
+                        </div>
+                        <a href="${lvl.url_konten}" target="_blank" onclick="markComplete('${currentUser.user_id}', '${materiId}', '${lvl.level_id}')" 
+                           class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition flex items-center gap-2">
+                            <i class="fas fa-external-link-alt"></i> Buka
+                        </a>
+                    </div>
+                    `;
+                }).join('');
+            } else {
+                container.innerHTML = '<p class="text-gray-500 text-center py-4">Belum ada level untuk materi ini</p>';
+            }
+        }
+
+        function backToCourseList() {
+            document.getElementById('level-detail').classList.add('hide');
+            document.getElementById('course-list').classList.remove('hide');
+        }
+
+        async function markComplete(userId, materiId, levelId) {
+            console.log('✅ Marking complete:', levelId);
+            await apiCall('completeLevel', { user_id: userId, materi_id: materiId, level_id: levelId });
+        }
+
+        async function loadPortfolio() {
+            console.log('💼 Loading portfolio...');
+            const res = await apiCall('getPortofolio', { user_id: currentUser.user_id });
+            const container = document.getElementById('portfolio-list');
+            
+            if (res.status === 'success' && res.data && res.data.length > 0) {
+                container.innerHTML = res.data.map(p => `
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-semibold text-gray-800">${p.judul_materi}</h4>
+                            <span class="text-sm font-bold text-indigo-600">${p.persentase}</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-indigo-600 h-2.5 rounded-full" style="width: ${p.persentase}"></div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Level ${p.level_selesai} dari ${p.level_terakhir} diselesaikan</p>
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = '<p class="text-gray-500 text-center py-4">Belum ada progres belajar. Mulai course pertama Anda!</p>';
+            }
+        }
+
+        async function generateCertificate() {
+            console.log('🎓 Generating certificate...');
+            const res = await apiCall('generateSertifikat', { user_id: currentUser.user_id });
+            if (res.status === 'success') {
+                const d = res.data;
+                document.getElementById('cert-name').textContent = d.nama;
+                document.getElementById('cert-username').textContent = `@${d.username}`;
+                document.getElementById('cert-level').textContent = `Level ${d.level}`;
+                document.getElementById('cert-gelar').textContent = d.gelar;
+                document.getElementById('cert-materi').textContent = d.total_materi;
+                document.getElementById('cert-progres').textContent = d.rata_rata_progres;
+                document.getElementById('cert-date').textContent = d.tanggal;
+                document.getElementById('cert-id').textContent = d.sertifikat_id;
+                document.getElementById('certificate-modal').classList.remove('hide');
+            } else {
+                alert(res.message);
+            }
+        }
+
+        function closeCertificate() {
+            document.getElementById('certificate-modal').classList.add('hide');
+        }
+
+        async function loadLeaderboard() {
+            console.log('🏆 Loading leaderboard...');
+            const res = await apiCall('getLeaderboard');
+            const tbody = document.getElementById('leaderboard-body');
+            
+            if (res.status === 'success' && res.data && res.data.length > 0) {
+                tbody.innerHTML = res.data.slice(0, 20).map((m, idx) => {
+                    let rankClass = 'text-gray-600';
+                    let rankIcon = '';
+                    if (idx === 0) { rankClass = 'text-yellow-600 font-bold'; rankIcon = '<i class="fas fa-crown mr-1"></i>'; }
+                    else if (idx === 1) { rankClass = 'text-gray-500 font-bold'; rankIcon = '<i class="fas fa-medal mr-1"></i>'; }
+                    else if (idx === 2) { rankClass = 'text-orange-600 font-bold'; rankIcon = '<i class="fas fa-medal mr-1"></i>'; }
+                    
+                    const isMe = m.user_id === currentUser.user_id ? 'bg-indigo-50 font-semibold' : '';
+                    
+                    return `
+                    <tr class="hover:bg-gray-50 ${isMe}">
+                        <td class="px-6 py-4 ${rankClass}">${rankIcon} #${m.peringkat}</td>
+                        <td class="px-6 py-4 font-medium text-gray-900">@${m.username}</td>
+                        <td class="px-6 py-4 hidden sm:table-cell">${m.nama_lengkap}</td>
+                        <td class="px-6 py-4 hidden md:table-cell text-gray-500">${m.domisili}</td>
+                        <td class="px-6 py-4 font-bold text-indigo-600">${m.total_poin}</td>
+                    </tr>
+                    `;
+                }).join('');
+            } else {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center py-8 text-gray-500">Belum ada data peringkat</td></tr>';
+            }
+        }
+
+        document.getElementById('form-consult').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const res = await apiCall('kirimKonsultasi', {
+                user_id: currentUser.user_id,
+                subjek: document.getElementById('consult-subjek').value,
+                pesan: document.getElementById('consult-pesan').value
+            });
+            if (res.status === 'success') {
+                alert('Pesan berhasil dikirim ke Admin!');
+                document.getElementById('form-consult').reset();
+            } else {
+                alert(res.message);
+            }
+        });
+
+        function loadAdminData() {
+            document.getElementById('admin-name-display').textContent = currentUser.nama_lengkap;
+            loadAdminStats();
+            loadAdminMateri();
+            loadAdminMembers();
+            loadAdminConsult();
+        }
+
+        function showAdminView(target) {
+            document.querySelectorAll('.admin-view').forEach(el => el.classList.add('hide'));
+            document.getElementById(`a-${target}`).classList.remove('hide');
+            
+            document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+                if (btn.dataset.target === target) {
+                    btn.classList.add('bg-gray-800');
+                } else {
+                    btn.classList.remove('bg-gray-800');
+                }
+            });
+
+            const titles = { home: 'Dashboard', materi: 'Kelola Materi', members: 'Data Member', consult: 'Konsultasi Member', notif: 'Kirim Notifikasi' };
+            document.getElementById('admin-page-title').textContent = titles[target];
+        }
+
+        async function loadAdminStats() {
+            const res = await apiCall('getDashboardStats');
+            if (res.status === 'success') {
+                const d = res.data;
+                document.getElementById('admin-stat-members').textContent = d.total_member;
+                document.getElementById('admin-stat-active').textContent = d.most_active_user ? d.most_active_user.nama_lengkap : '-';
+                document.getElementById('admin-stat-active-time').textContent = d.most_active_user ? `${d.most_active_user.total_waktu} jam belajar` : '0 jam';
+                document.getElementById('admin-stat-materi').textContent = '9';
+                
+                const statsContainer = document.getElementById('admin-level-stats');
+                statsContainer.innerHTML = Object.entries(d.level_stats).map(([level, count]) => `
+                    <div class="flex items-center gap-4">
+                        <span class="w-24 text-sm text-gray-600">Level ${level}</span>
+                        <div class="flex-1 bg-gray-200 rounded-full h-3">
+                            <div class="bg-indigo-600 h-3 rounded-full" style="width: ${Math.min((count / (d.total_member || 1)) * 100, 100)}%"></div>
+                        </div>
+                        <span class="w-8 text-sm font-semibold text-gray-800">${count}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        async function loadAdminMateri() {
+            const res = await apiCall('getAllMateri');
+            const tbody = document.getElementById('admin-materi-list');
+            if (res.status === 'success' && res.data) {
+                tbody.innerHTML = res.data.map(m => `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 font-mono text-xs text-gray-500">${m.materi_id}</td>
+                        <td class="px-6 py-4 font-medium text-gray-900">${m.judul_materi}</td>
+                        <td class="px-6 py-4"><span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">${m.kategori}</span></td>
+                        <td class="px-6 py-4">${m.jumlah_level}</td>
+                        <td class="px-6 py-4"><span class="text-green-600 text-xs font-semibold uppercase">${m.status}</span></td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        async function loadAdminMembers() {
+            const res = await apiCall('getAllMembers');
+            const tbody = document.getElementById('admin-members-list');
+            if (res.status === 'success' && res.data) {
+                tbody.innerHTML = res.data.map(m => `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 font-mono text-xs text-indigo-600">@${m.username}</td>
+                        <td class="px-6 py-4 font-medium text-gray-900">${m.nama_lengkap}</td>
+                        <td class="px-6 py-4 text-gray-600">${m.domisili}</td>
+                        <td class="px-6 py-4 font-bold text-gray-800">${m.total_poin}</td>
+                        <td class="px-6 py-4"><span class="bg-indigo-100 text-indigo-700 px-2 py-1 rounded text-xs font-semibold">Level ${m.level_tertinggi}</span></td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        async function loadAdminConsult() {
+            const res = await apiCall('getAllKonsultasi');
+            const container = document.getElementById('admin-consult-list');
+            if (res.status === 'success' && res.data) {
+                container.innerHTML = res.data.map(k => `
+                    <div class="bg-white rounded-xl border ${k.status === 'belum_dibalas' ? 'border-red-200 bg-red-50' : 'border-gray-200'} p-5">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <span class="text-xs font-mono text-gray-500">${k.konsultasi_id}</span>
+                                <h4 class="font-bold text-gray-800">${k.subjek}</h4>
+                                <p class="text-xs text-gray-500">Dari: (ID: ${k.user_id}) • ${k.tanggal}</p>
+                            </div>
+                            <span class="text-xs px-2 py-1 rounded-full ${k.status === 'belum_dibalas' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'} font-semibold">
+                                ${k.status === 'belum_dibalas' ? 'Belum Dibalas' : 'Dibalas'}
+                            </span>
+                        </div>
+                        <p class="text-gray-700 mb-4 bg-white p-3 rounded border border-gray-100">${k.pesan}</p>
+                        ${k.status === 'belum_dibalas' ? `
+                        <div class="flex gap-2">
+                            <input type="text" id="reply-${k.konsultasi_id}" placeholder="Tulis balasan..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <button onclick="replyConsult('${k.konsultasi_id}')" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-indigo-700">Balas</button>
+                        </div>
+                        ` : `
+                        <div class="bg-gray-100 p-3 rounded-lg border-l-4 border-green-500">
+                            <p class="text-xs text-gray-500 mb-1">Balasan Admin:</p>
+                            <p class="text-sm text-gray-800">${k.balasan_admin}</p>
+                        </div>
+                        `}
+                    </div>
+                `).join('');
+            }
+        }
+
+        async function replyConsult(konsultasiId) {
+            const balasan = document.getElementById(`reply-${konsultasiId}`).value;
+            if (!balasan) return alert('Isi balasan terlebih dahulu');
+            
+            const res = await apiCall('balasKonsultasi', { konsultasi_id: konsultasiId, balasan });
+            if (res.status === 'success') {
+                alert('Balasan terkirim!');
+                loadAdminConsult();
+            } else {
+                alert(res.message);
+            }
+        }
+
+        document.getElementById('form-admin-notif').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const target = document.getElementById('notif-target').value || 'SEMUA';
+            const res = await apiCall('sendNotifToMember', {
+                user_id: target,
+                judul: document.getElementById('notif-judul').value,
+                pesan: document.getElementById('notif-pesan').value
+            });
+            if (res.status === 'success') {
+                alert('Notifikasi berhasil dikirim!');
+                document.getElementById('form-admin-notif').reset();
+            } else {
+                alert(res.message);
+            }
+        });
+    </script>
+</body>
+</html>
